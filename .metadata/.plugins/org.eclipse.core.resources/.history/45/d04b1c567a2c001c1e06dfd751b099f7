@@ -10,11 +10,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "esqueleto.h"
-#define TAM_ESQUELETO 100
-int main(void) {
-	setbuf(stdout, NULL);
-	Esqueleto esqueletoLista[TAM_ESQUELETO];
 
+int main(void) {
+	puts("!!!Hello World!!!"); /* prints !!!Hello World!!! */
 	return EXIT_SUCCESS;
 }
