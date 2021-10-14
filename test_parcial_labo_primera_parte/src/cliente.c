@@ -82,17 +82,19 @@ int cliente_buscarLugarLibre(Cliente lista[],int len)
 void cliente_mostrarStructura(Cliente lista [],int len)
 {
     int i;
+    printf("id:\t    nombre:\t  apellido:\t cuit:\t");
     for(i=0; i<len; i++)
     {
         if(lista[i].flagEmpty==OCUPADO)
         {
-            printf("Id:%d NOMBRE: %s       DIRECCION: %s       CUIL: %d\n",lista[i].id,lista[i].nombre,lista[i].apellido,lista[i].cuit);
+        	 printf("\n%d\t     %s\t      %s\t        %d\t",lista[i].id,lista[i].nombre,lista[i].apellido,lista[i].cuit);
+
 
         }
     }
 
 }
-int cliente_buscarId(Cliente listado[],int len, int id,int* idCliente)
+int cliente_buscarId(Cliente listado[],int len, int id,int* indice)
 {
     int retorno = -1;
     int i;
@@ -104,7 +106,7 @@ int cliente_buscarId(Cliente listado[],int len, int id,int* idCliente)
             if(listado[i].flagEmpty == 0 && listado[i].id == id)
             {
                 retorno = 0;
-                *idCliente=i;
+                *indice=i;
                 break;
             }
         }
@@ -139,7 +141,7 @@ int cliente_alta( Cliente lista[],int len)
 }
 void cliente_mostrarUno(Cliente lista[],int i)
 {
-	printf("Id:%d NOMBRE: %s  DIRECCION: %s CUIL: %d\n",lista[i].id,lista[i].nombre,lista[i].apellido,lista[i].cuit);
+	printf("Id:%d NOMBRE: %s       DIRECCION: %s CUIL: %d\n",lista[i].id,lista[i].nombre,lista[i].apellido,lista[i].cuit);
 }
 int cliente_modificar(Cliente lista[],int len)
 {
@@ -151,7 +153,7 @@ int cliente_modificar(Cliente lista[],int len)
 
 
 	cliente_mostrarStructura(lista, len);
-	utn_getInt(&idAux, "ingrese el id a modificar \n", "error ingrese un numero \n", 0, len, 5);
+	utn_getInt(&idAux, "\ningrese el id a modificar \n", "error ingrese un numero \n", 0, len, 5);
 	idAux=cliente_buscarId(lista, len, idAux,&indice);
 	if (len!=0&&lista!=NULL)
 	{

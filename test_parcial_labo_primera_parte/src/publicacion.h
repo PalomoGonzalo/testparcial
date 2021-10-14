@@ -26,12 +26,14 @@ int publicacion_alta( Publicacion lista_publicacion[],int len,Cliente lista[],in
 int publicacion_buscarLugarLibre(Publicacion lista[],int len);
 int publicacion_dameIdNuevo(void);
 void publicacion_mostrarStructura(Publicacion mostrar [],int len);
-int publicacion_buscarId(Publicacion listado[],int len, int id);
+int publicacion_buscarId(Publicacion listado[],int len, int id,int* indice);
 int publicacion_menuModificar(Publicacion lista[],int len,int indice);
 int publicacion_modificar(Publicacion lista[],int len);
 void publicacion_mostrarUno(Publicacion lista[],int indice);
-int publicacion_bajaMenu(Publicacion lista[],int len,int indice);
-int publicacion_baja(Publicacion lista[],int len);
+int publicacion_pausarMenu(Publicacion lista[],int len,int indice);
+int publicacion_pausar(Publicacion lista[],int len,Cliente cliente_lista[],int lenCliente);
+int publicacion_buscarCliente(Publicacion listado[],int len, int indice,Cliente cliente_lista[]);
+void publicacion_mostrarPausada(Publicacion mostrar [],int len);
 
 
 #endif /* PUBLICACION_H_ */

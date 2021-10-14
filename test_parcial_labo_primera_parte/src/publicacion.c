@@ -9,7 +9,7 @@
 #include "publicacion.h"
 #include "funciones.h"
 #include "cliente.h"
-
+#define PUASADA 2
 //MENU
 /*
 
@@ -88,7 +88,7 @@ void publicacion_mostrarStructura(Publicacion mostrar [],int len)
     }
 
 }
-int publicacion_buscarId(Publicacion listado[],int len, int id)
+int publicacion_buscarId(Publicacion listado[],int len, int id,int* indice)
 {
     int retorno = -1;
     int i;
@@ -99,7 +99,8 @@ int publicacion_buscarId(Publicacion listado[],int len, int id)
         {
             if(listado[i].flagEmpty == 0 && listado[i].id == id)
             {
-                retorno = i;
+                retorno = 0;
+                *indice=i;
                 break;
             }
         }
@@ -114,19 +115,19 @@ int publicacion_alta( Publicacion lista_publicacion[],int len,Cliente lista[],in
 	int indice;
 	int idCliente;
 	int existeId;
+	int retornoOpcion;
 	if (len!=0&&lista_publicacion!=NULL)
 	{
 		indice=publicacion_buscarLugarLibre(lista_publicacion, len);
 		if(indice>=0)
 		{
 			cliente_mostrarStructura(lista, lenCliente);
-			printf("asd");
-			utn_getInt(&idCliente, "ingrese el id del cliente \n", "error reingrese \n", 0, len, 10);
-			existeId=cliente_buscarId(lista, len, idCliente,&existeId);
-			if(existeId!=-1)
+			utn_getInt(&idCliente, "\ningrese el id del cliente \n", "error reingrese \n", 0, len, 10);
+			retornoOpcion=cliente_buscarId(lista, len, idCliente,&existeId);
+			if(retornoOpcion!=-1)
 			{
 				lista_publicacion[indice].idCliente=idCliente;
-				utn_getInt(&lista_publicacion[indice].numeroDeRubro, "ingrese el numero de rubro\n", "error reingrese\n", 1, len, 10);
+				utn_getInt(&lista_publicacion[indice].numeroDeRubro, "ingrese el numero de rubro\n", "error reingrese\n", 1, 898989, 10);
 				getString("ingrese texto de aviso \n",lista_publicacion[indice].textoDelAviso );
 				lista_publicacion[indice].id=publicacion_dameIdNuevo();
 				lista_publicacion[indice].flagEmpty=OCUPADO;
@@ -136,15 +137,6 @@ int publicacion_alta( Publicacion lista_publicacion[],int len,Cliente lista[],in
 			}
 			else
 				printf("el id no existe \n");
-
-			/*utn_getInt(&displaysList[indice].type, "ingrese 0 para lcd \ningrese 1 para led\n ", "error reingrese 0 para lcd \ningrese 1 para led\n ", 0, 1, 100);
-			utn_getFloat(&displaysList[indice].price, "ingrese el precio", "error reingrese ", 1, 555555, 10);
-			getString("ingrese el nombre",displaysList[indice].name );
-			getString("ingrese la direccion",displaysList[indice].addres);
-			displaysList[indice].id=publicacion_dameIdNuevo();
-			retorno =1;
-			displaysList[indice].flagEmpty=0;
-			*/
 		}
 	}
 
@@ -153,25 +145,26 @@ int publicacion_alta( Publicacion lista_publicacion[],int len,Cliente lista[],in
 }
 void publicacion_mostrarUno(Publicacion lista[],int i)
 {
-	 printf("Id:%d texto de la publicacion: %s       numero de rubro: %d  idcliente: %d \n",lista[i].id,lista[i].textoDelAviso,lista[i].numeroDeRubro,lista[i].idCliente);
+	 printf("Id:%d texto de la publicacion: %s         numero de rubro: %d  idcliente: %d \n",lista[i].id,lista[i].textoDelAviso,lista[i].numeroDeRubro,lista[i].idCliente);
 }
 int publicacion_modificar(Publicacion displaysList[],int len)
 {
 	int idAux;
 	int retorno=0;
 	int indice;
+	int retornoId;
 //	int auxContinuar=1;
 
 	publicacion_mostrarStructura(displaysList, len);
-	utn_getInt(&idAux, "ingrese el id a modificar \n", "error ingrese un numero\n", 1, len, 5);
-	indice=publicacion_buscarId(displaysList, len, idAux);
+	utn_getInt(&idAux, "ingrese el id a modidficar \n", "error ingrese un numero\n", 1, len, 5);
+	retornoId=publicacion_buscarId(displaysList, len, idAux,&indice);
 	if (len!=0&&displaysList!=NULL)
 	{
-			if(indice!=-1)
+			if(retornoId!=-1)
 			{
 			//	publicacion_menuModificar(displaysList, len, indice);
 				retorno=1;
-				indice=-1;
+			//	indice=-1;
 			}
 			else
 			{
@@ -229,23 +222,58 @@ int publicacion_modificar(Publicacion displaysList[],int len)
 return retorno;
 }
 */
-/*int esqueleto_baja(Publicacion displaysList[],int len)
+int publicacion_buscarCliente(Publicacion listado[],int len, int indice,Cliente cliente_lista[])
+{
+    int retorno = -1;
+    int i;
+    if(len > 0 && listado != NULL)
+    {
+        retorno = -1;
+        for(i=0; i<len; i++)
+        {
+            if(listado[indice].idCliente ==cliente_lista[i].id)
+            {
+            	cliente_mostrarUno(cliente_lista, i);
+                retorno = 0;
+
+                break;
+            }
+        }
+    }
+    return retorno;
+}
+void publicacion_mostrarPausada(Publicacion mostrar [],int len)
+{
+    int i;
+    for(i=0; i<len; i++)
+    {
+        if(mostrar[i].flagEmpty==PAUSADA)
+        {
+            printf("Id:%d texto de la publicacion: %s       numero de rubro: %d  idcliente: %d \n",mostrar[i].id,mostrar[i].textoDelAviso,mostrar[i].numeroDeRubro,mostrar[i].idCliente);
+
+        }
+    }
+
+}
+int publicacion_pausar(Publicacion lista[],int len,Cliente cliente_lista[],int lenCliente)
 {
 	int auxId;
 	int retorno=0;
-	publicacion_mostrarStructura(displaysList, len);
+	int retornoId;
+	publicacion_mostrarStructura(lista, len);
 	int indice;
 	utn_getInt(&auxId, "ingrese el ide que quiere de dar de baja \n", "error ingrese un numero valido", 1, len, 4);
 
-	if (len!=0&&displaysList!=NULL)
+	if (len!=0&&lista!=NULL)
 	{
 
-			indice=publicacion_buscarId(displaysList, len, auxId);
-			if(indice!=-1)
+			retornoId=publicacion_buscarId(lista, len, auxId,&indice);
+			if(retornoId!=-1)
 			{
-
-			publicacion_bajaMenu(displaysList, len, indice);
-			retorno=1;
+				printf("cliente que usa este servicio \n");
+				publicacion_buscarCliente(lista, lenCliente, indice, cliente_lista);
+				publicacion_pausarMenu(lista, len, indice);
+			//retorno=1;
 
 			}
 			else
@@ -256,22 +284,22 @@ return retorno;
 		}
 	return retorno;
 	}
-*/
 
-/*int publicacion_bajaMenu(Publicacion displaysList[],int len,int indice)
+
+int publicacion_pausarMenu(Publicacion lista[],int len,int indice)
 {
 	int auxBaja;
 	int retorno;
 
-	if (len!=0&&displaysList!=NULL)
+	if (len!=0&&lista!=NULL)
 	{
-		publicacion_mostrarUno(displaysList, indice);
-		utn_getInt(&auxBaja, "Aprete 1 para dar de baja 2 para cancelar", "error ingrese un numero valido", 1, 2, 3);
+		//publicacion_mostrarUno(displaysList, indice);
+		utn_getInt(&auxBaja, "Aprete 1 para dar de baja 2 para cancelar\n", "error ingrese un numero valido\n", 1, 2, 3);
 
 		if (auxBaja==1)
 		{
 			printf("se dio de baja\n");
-			displaysList[indice].flagEmpty=2;
+			lista[indice].flagEmpty=PAUSADA;
 			retorno=1;
 		 }
 		 else
@@ -283,5 +311,5 @@ return retorno;
 	}
 	return retorno;
 }
-*/
+
 

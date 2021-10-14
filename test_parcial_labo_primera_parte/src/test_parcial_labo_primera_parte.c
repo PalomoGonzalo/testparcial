@@ -33,8 +33,8 @@ int main(void) {
 	cliente_altaHardcodeada(lista_clientes, "palomo", "s", 11213, OCUPADO,CLIENTE_LEN,2);
 	cliente_altaHardcodeada(lista_clientes, "gomez", "b", 121454, OCUPADO,CLIENTE_LEN,3);
 	cliente_altaHardcodeada(lista_clientes, "asd", "g", 142314, OCUPADO,CLIENTE_LEN,4);
-	int retornoAdd=0;
-	int contador=0;
+	int retornoAdd=1;
+	//int contador=0;
 
 	do{
 		utn_getInt(&opcion, "\n 1-Dar de Alta\n 2-Modificar\n 3-Dar de baja \n 7-Salir\n", "error ingrese numeros validos", 1, 7, 8);
@@ -45,19 +45,19 @@ int main(void) {
 					cliente_mostrarStructura(lista_clientes, CLIENTE_LEN);
 					break;
 				case 2:
-					if(retornoAdd==0)
+					if(retornoAdd==1)
 						cliente_modificar(lista_clientes, CLIENTE_LEN);
 					else
 						printf("no hay datos cargados \n");
 					break;
 				case 3:
-					if(retornoAdd==0)
+					if(retornoAdd==1)
 						cliente_baja(lista_clientes, CLIENTE_LEN);
 					else
 						printf("no hay datos cargados \n");
 					break;
 				case 4:
-					if(retornoAdd==0)
+					if(retornoAdd==1)
 					{
 						publicacion_alta(lista_publicacion, PUBLICACION_LEN, lista_clientes,CLIENTE_LEN);
 
@@ -66,10 +66,15 @@ int main(void) {
 						printf("no hay datos cargados \n");
 					break;
 				case 5:
-					if(retornoAdd==0)
-						contador++;
+					if(retornoAdd==1)
+						{
+							publicacion_pausar(lista_publicacion, PUBLICACION_LEN, lista_clientes,CLIENTE_LEN);
+							publicacion_mostrarPausada(lista_publicacion, PUBLICACION_LEN);
+						}
 					else
+					{
 						printf("no hay datos cargados \n");
+					}
 					break;
 				case 6:
 					break;
