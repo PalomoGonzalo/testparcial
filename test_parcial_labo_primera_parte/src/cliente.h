@@ -16,6 +16,7 @@ typedef struct {
 	char nombre[128];
 	char apellido[128];
 	int flagEmpty;
+	int contadorPublicacion;
 }Cliente;
 
 int cliente_inicializarArray( Cliente lista[],int len);

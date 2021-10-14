@@ -77,6 +77,7 @@ int main(void) {
 					}
 					break;
 				case 6:
+					publicacion_contadorAvisos(lista_publicacion, PUBLICACION_LEN, lista_clientes, CLIENTE_LEN);
 					break;
 				case 7:
 					seguir='n';

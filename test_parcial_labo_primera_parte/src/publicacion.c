@@ -114,7 +114,7 @@ int publicacion_alta( Publicacion lista_publicacion[],int len,Cliente lista[],in
 	int retorno=0;
 	int indice;
 	int idCliente;
-	int existeId;
+	int indiceCliente;
 	int retornoOpcion;
 	if (len!=0&&lista_publicacion!=NULL)
 	{
@@ -123,7 +123,7 @@ int publicacion_alta( Publicacion lista_publicacion[],int len,Cliente lista[],in
 		{
 			cliente_mostrarStructura(lista, lenCliente);
 			utn_getInt(&idCliente, "\ningrese el id del cliente \n", "error reingrese \n", 0, len, 10);
-			retornoOpcion=cliente_buscarId(lista, len, idCliente,&existeId);
+			retornoOpcion=cliente_buscarId(lista, len, idCliente,&indiceCliente);
 			if(retornoOpcion!=-1)
 			{
 				lista_publicacion[indice].idCliente=idCliente;
@@ -133,6 +133,7 @@ int publicacion_alta( Publicacion lista_publicacion[],int len,Cliente lista[],in
 				lista_publicacion[indice].flagEmpty=OCUPADO;
 				printf("se cargo correctamente la publicacion: \n");
 				publicacion_mostrarUno(lista_publicacion, indice);
+				//lista[indiceCliente].contadorPublicacion=lista[indiceCliente].contadorPublicacion+1;
 
 			}
 			else
@@ -260,6 +261,7 @@ int publicacion_pausar(Publicacion lista[],int len,Cliente cliente_lista[],int l
 	int auxId;
 	int retorno=0;
 	int retornoId;
+	//int idCliente;
 	publicacion_mostrarStructura(lista, len);
 	int indice;
 	utn_getInt(&auxId, "ingrese el ide que quiere de dar de baja \n", "error ingrese un numero valido", 1, len, 4);
@@ -273,6 +275,7 @@ int publicacion_pausar(Publicacion lista[],int len,Cliente cliente_lista[],int l
 				printf("cliente que usa este servicio \n");
 				publicacion_buscarCliente(lista, lenCliente, indice, cliente_lista);
 				publicacion_pausarMenu(lista, len, indice);
+			//	lista[indiceCliente].contadorPublicacion=lista[indiceCliente].contadorPublicacion-1;
 			//retorno=1;
 
 			}
@@ -289,7 +292,7 @@ int publicacion_pausar(Publicacion lista[],int len,Cliente cliente_lista[],int l
 int publicacion_pausarMenu(Publicacion lista[],int len,int indice)
 {
 	int auxBaja;
-	int retorno;
+	int retorno=-1;
 
 	if (len!=0&&lista!=NULL)
 	{
@@ -311,5 +314,46 @@ int publicacion_pausarMenu(Publicacion lista[],int len,int indice)
 	}
 	return retorno;
 }
+int publicacion_contadorAvisos(Publicacion lista_publicacion[], int len_publicacion,Cliente lista_cliente[],int len_clinente)
+{
+	int contador=0;
+
+
+	for (int i=0;i<len_publicacion;i++)
+	{
+		for (int j=0;j<len_clinente;j++)
+		{
+			if(lista_publicacion[i].flagEmpty==OCUPADO&&lista_cliente[j].flagEmpty==OCUPADO)
+			{
+				if(lista_publicacion[i].idCliente==lista_cliente[j].id)
+				{
+					lista_cliente[j].contadorPublicacion++;
+					contador++;
+				}
+			}
+		}
+	}
+	cliente_mostrarStructura(lista_cliente, len_clinente);
+
+	return contador;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

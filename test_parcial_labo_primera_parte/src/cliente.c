@@ -50,6 +50,7 @@ int cliente_inicializarArray( Cliente lista[],int len)
 		for(int i=0;i<len;i++)
 		{
 			lista[i].flagEmpty=VACIO;
+			lista[i].contadorPublicacion=0;
 			retorno=1;
 
 		}
@@ -87,7 +88,7 @@ void cliente_mostrarStructura(Cliente lista [],int len)
     {
         if(lista[i].flagEmpty==OCUPADO)
         {
-        	 printf("\n%d\t     %s\t      %s\t        %d\t",lista[i].id,lista[i].nombre,lista[i].apellido,lista[i].cuit);
+        	 printf("\n%d\t     %s\t      %s\t        %d\t   %d\t",lista[i].id,lista[i].nombre,lista[i].apellido,lista[i].cuit,lista[i].contadorPublicacion);
 
 
         }

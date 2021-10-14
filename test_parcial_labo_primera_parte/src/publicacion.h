@@ -34,6 +34,7 @@ int publicacion_pausarMenu(Publicacion lista[],int len,int indice);
 int publicacion_pausar(Publicacion lista[],int len,Cliente cliente_lista[],int lenCliente);
 int publicacion_buscarCliente(Publicacion listado[],int len, int indice,Cliente cliente_lista[]);
 void publicacion_mostrarPausada(Publicacion mostrar [],int len);
+int publicacion_contadorAvisos(Publicacion lista_publicacion[], int len_publicacion,Cliente lista_cliente[],int len_clinente);
 
 
 #endif /* PUBLICACION_H_ */
