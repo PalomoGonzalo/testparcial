@@ -13,8 +13,7 @@
 #include "esqueleto.h"
 #define TAM_ESQUELETO 100
 int main(void) {
-	setbuf(stdout, NULL);
-	Esqueleto esqueletoLista[TAM_ESQUELETO];
+
 
 	return EXIT_SUCCESS;
 }
